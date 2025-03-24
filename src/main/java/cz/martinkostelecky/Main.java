@@ -13,20 +13,20 @@ public class Main {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
+        while (true) {
+
         double cpuUsage = getCPUUsage();
 
-        String numericValue = String.format("%.2f", cpuUsage);
+        String numericValue = Double.toString(cpuUsage);
 
         String[] command = {
-                "C:\\Program Files\\Zabbix Agent\\zabbix_sender.exe", // enter PATH to the zabbix_sender.exe or add executable in system's PATH
+                "/home/<user>/bin/zabbix_sender", // enter PATH to the zabbix_sender binary
                 "-z", "0.0.0.0", // enter Zabbix server IP
                 "-p", "10051", // Port
-                "-s", "cpu-monitoring", // Hostname
-                "-k", "cpu.monitor", // Key
+                "-s", "monitoring-cpu-java-app", // Hostname
+                "-k", "cpu.usage", // Key
                 "-o", numericValue // Value
         };
-
-        while (true) {
 
             Process process = Runtime.getRuntime().exec(command);
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
